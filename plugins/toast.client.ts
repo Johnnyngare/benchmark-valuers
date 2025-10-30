@@ -1,12 +1,15 @@
 // plugins/toast.client.ts
 import { defineNuxtPlugin } from '#app';
-import Toast from 'vue-toastification';
+import VueToastification, { useToast as createToastComposable } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 
 export default defineNuxtPlugin((nuxtApp) => {
-  // Register the vue-toastification plugin with the Vue app
-  nuxtApp.vueApp.use(Toast, {
-    // You can set your default options here
+  // Ensure this plugin only runs on the client-side for Vue-Toastification
+  // (though it's a .client.ts file, good to be explicit for the plugin)
+  if (process.server) return; 
+
+  // Register the Vue-Toastification plugin with the Vue app
+  nuxtApp.vueApp.use(VueToastification, {
     position: 'top-right',
     timeout: 5000,
     closeOnClick: true,
@@ -20,4 +23,13 @@ export default defineNuxtPlugin((nuxtApp) => {
     icon: true,
     rtl: false,
   });
+
+  // Provide the actual useToast composable through the Nuxt app context.
+  // This makes `useNuxtApp().$toast` available in your components.
+  // We name the imported useToast specifically to avoid conflicts.
+  return {
+    provide: {
+      toast: createToastComposable() // Provide the function from the client-side plugin instance
+    }
+  }
 });
