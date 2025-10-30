@@ -1,0 +1,31 @@
+{
+  // Extend Nuxt's generated config for comprehensive settings
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    // Explicitly define baseUrl and paths to ensure consistent resolution
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"]
+    },
+    // Nuxt will override/merge many of these, but it's good practice
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "types": ["node"]
+  },
+  // Ensure the entire project directory is included for TypeScript to process
+  "include": [
+    ".",
+    ".nuxt/nuxt.d.ts" // Ensure Nuxt's generated types are included
+  ],
+  "exclude": [
+    "node_modules",
+    ".output",
+    ".nuxt",
+    "dist"
+  ]
+}

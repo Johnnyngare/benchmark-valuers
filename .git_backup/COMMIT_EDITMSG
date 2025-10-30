@@ -1,0 +1,1 @@
+fix: Explicitly prerender signup route in Nitro config (re-attempt after git fix)
