@@ -62,7 +62,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute, navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
-// import { useToast } from 'vue-toastification'; // <-- REMOVED THIS LINE
+
 
 definePageMeta({
   layout: 'default',
@@ -73,8 +73,8 @@ useHead({
 });
 
 const route = useRoute();
-const nuxtApp = useNuxtApp(); // INITIALIZE nuxtApp
-const toast = nuxtApp.$toast; // <--- GET TOAST INSTANCE FROM NUXT APP CONTEXT
+const nuxtApp = useNuxtApp(); 
+const toast = nuxtApp.$toast; 
 
 const token = ref<string | null>(null);
 const email = ref<string | null>(null);

@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
   );
   
   // Construct the registration URL for the email
-  const registrationUrl = `${BASE_URL}/signup/${inviteToken}?email=${encodeURIComponent(email)}`;
+  const registrationUrl = `${BASE_URL}/signup/${inviteToken}`;
   
   // 4. Send the invitation email via Resend
   if (!RESEND_API_KEY) {
