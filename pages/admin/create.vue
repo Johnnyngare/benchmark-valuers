@@ -87,7 +87,7 @@ import { navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
 import { marked } from 'marked';
 // import { useToast } from 'vue-toastification'; // <-- REMOVED this line
 
-definePageMeta({ middleware: 'auth' });
+definePageMeta({ middleware: 'auth', ssr: false });
 useHead({ title: 'Create New Post | Benchmark Valuers' });
 
 const nuxtApp = useNuxtApp(); // INITIALIZE nuxtApp

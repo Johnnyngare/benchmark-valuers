@@ -1,6 +1,16 @@
 // nuxt.config.ts
+import dotenv from 'dotenv'; // <--- ADD THIS IMPORT
+
+// --- CRITICAL FIX: Load .env.development.local for local development ---
+// Only load if not running in a build environment where Vercel injects them
+if (process.env.NODE_ENV !== 'production' && process.env.VERCEL_ENV !== 'production') {
+  dotenv.config({ path: '.env.development.local' });
+}
+// --- END CRITICAL FIX ---
+
+
 export default defineNuxtConfig({
-  ssr: true, // Keep SSR true for APIs and other pages
+  ssr: true, 
   pages: true,
   devtools: { enabled: true },
   modules: [
@@ -13,30 +23,25 @@ export default defineNuxtConfig({
     jwtSecret: process.env.JWT_SECRET,
     resendApiKey: process.env.NUXT_RESEND_API_KEY,
     public: {
+      // Use POSTGRES_URL if it's the primary one, otherwise DATABASE_URL
+      // The error specifically mentions POSTGRES_URL
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000',
     }
   },
   
   nitro: {
-    // Keep preset as default 'vercel' for hybrid build (SSR + API functions)
     preset: 'vercel', 
     prerender: {
-      // --- CRITICAL FIX: Carefully define prerender routes ---
-      // Prerender only essential static-like pages to avoid crashing on dynamic fetches
       routes: [
         '/',
         '/about',
         '/contact',
         '/services',
         '/who-we-are',
-        '/signup/PRERENDER_PLACEHOLDER_TOKEN', // Keep this for testing signup prerender
-        '/admin/login', // Prerender admin login if desired (it's static)
-        // DO NOT automatically prerender dynamic blog posts (e.g., /blog/:slug) here
-        // as fetching them can crash the build if data isn't robust during build.
-        // Let them be SSR/client-side rendered on demand.
+        '/admin/login', 
       ],
-      crawlLinks: false, // Set to false if you manually specify all prerender routes
-      autoGroup: false,  // Set to false if you manually define server functions / routes.
+      crawlLinks: false,
+      autoGroup: false,
     },
   },
 

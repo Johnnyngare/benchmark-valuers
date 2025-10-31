@@ -112,10 +112,14 @@ import { useRoute, useAsyncData, useHead, useSeoMeta, useRuntimeConfig } from '#
 import { computed, ref, onMounted } from 'vue';
 import { marked } from 'marked';
 
+// --- ADDED: Disable SSR for this page ---
+definePageMeta({
+  ssr: false, 
+});
+// --- END ADDED ---
+
 const route = useRoute();
-// --- CRITICAL FIX: Remove .join('/') as slug is now directly a string ---
 const slug = route.params.slug as string; 
-// -----------------------------------------------------------------------
 const config = useRuntimeConfig();
 
 // Fetch the single blog post. The backend now returns a 'post' object directly

@@ -118,6 +118,7 @@ import { useRuntimeConfig } from 'nuxt/app'; // Import useRuntimeConfig
 definePageMeta({
   layout: "default",
   middleware: ["auth"],
+  ssr: false,
 });
 
 useHead({

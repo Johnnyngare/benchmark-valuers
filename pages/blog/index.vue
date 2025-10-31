@@ -160,18 +160,23 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
-import { useAsyncData, useHead, useRoute, useRouter, useSeoMeta, useRuntimeConfig } from "nuxt/app"; // IMPORT useRuntimeConfig
+import { useAsyncData, useHead, useRoute, useRouter, useSeoMeta, useRuntimeConfig } from "nuxt/app";
 
-// --- CHANGED: Updated interface to reflect database schema properties ---
+// --- ADDED: Disable SSR for this page ---
+definePageMeta({
+  ssr: false, 
+});
+// --- END ADDED ---
+
 interface BlogPost {
   id: number;
   slug: string;
   title: string;
   description: string;
   author: string;
-  createdAt: string; // From database, will be an ISO string
+  createdAt: string;
   updatedAt: string;
-  imageUrl: string | null; // From database, nullable
+  imageUrl: string | null;
   category: string | null;
   content: string;
 }
@@ -186,12 +191,12 @@ interface PaginatedResponse {
 
 const route = useRoute();
 const router = useRouter();
-const config = useRuntimeConfig(); // Initialize runtime config
+const config = useRuntimeConfig();
 
 const searchQuery = ref<string>((route.query.search as string) || '');
 const selectedCategory = ref<string>((route.query.category as string) || 'All Posts');
 const currentPage = ref<number>(parseInt(route.query.page as string) || 1);
-const postsPerPage = ref<number>(6); // Adjust as needed
+const postsPerPage = ref<number>(6);
 
 const fetchPosts = async () => {
   const params: Record<string, string | number> = {
@@ -201,15 +206,11 @@ const fetchPosts = async () => {
   if (searchQuery.value) {
     params.search = searchQuery.value;
   }
-  // The API will filter categories
-  // No need to pass 'All Posts' to the API
   if (selectedCategory.value !== 'All Posts') {
     params.category = selectedCategory.value;
   }
 
-  // Update URL query parameters
-  // IMPORTANT: Ensure this happens before the fetch, or use refresh as a watcher
-  await router.push({ query: params }); // Use await here
+  await router.push({ query: params });
   
   return await $fetch<PaginatedResponse>('/api/posts', {
     params: params
@@ -220,8 +221,8 @@ const { data: paginatedData, pending, error, refresh } = await useAsyncData(
   'paginatedBlogPosts',
   fetchPosts,
   {
-    watch: [currentPage, searchQuery, selectedCategory], // refresh will be triggered by these
-    immediate: true, // Fetch immediately on component load
+    watch: [currentPage, searchQuery, selectedCategory],
+    immediate: true,
   }
 );
 
@@ -229,7 +230,6 @@ const posts = computed(() => paginatedData.value?.posts || []);
 const totalPosts = computed(() => paginatedData.value?.totalPosts || 0);
 const totalPages = computed(() => paginatedData.value?.totalPages || 0);
 
-// `filteredPosts` now directly uses the `posts` from the API response
 const filteredPosts = computed(() => posts.value);
 
 
@@ -241,28 +241,20 @@ const goToPage = (page: number) => {
 
 const setCategory = (category: string) => {
   selectedCategory.value = category;
-  currentPage.value = 1; // Reset to first page when changing category
+  currentPage.value = 1;
 };
 
 const refreshPage = () => {
-  currentPage.value = 1; // Reset to first page on search
-  refresh(); // Manually trigger refresh for search
+  currentPage.value = 1;
+  refresh();
 }
 
-// No need for watch on route if useAsyncData has watch and immediate: true.
-// This watch might cause double refreshes or unexpected behavior.
-// The `useAsyncData`'s `watch` option already covers query parameter changes.
-// If you absolutely need to update `ref`s from route changes not covered by `useAsyncData`'s watch,
-// you might keep it, but for `currentPage`, `searchQuery`, `selectedCategory`, `useAsyncData` handles it.
-
-
-// --- ADVANCED SEO TAGS FOR BLOG LISTING PAGE ---
 useHead({
   title: 'Blog & Insights - Benchmark Valuers',
   link: [
     {
       rel: 'canonical',
-      href: `${config.public.baseUrl}/blog`, // CHANGED: Use runtimeConfig
+      href: `${config.public.baseUrl}/blog`,
     },
   ],
 });
@@ -272,16 +264,15 @@ useSeoMeta({
   ogTitle: 'Blog & Insights - Benchmark Valuers',
   description: 'Stay informed with the latest real estate market trends, news, and expert insights from Benchmark Valuers Ltd in Kenya.',
   ogDescription: 'Stay informed with the latest real estate market trends, news, and expert insights from Benchmark Valuers Ltd in Kenya.',
-  ogImage: `${config.public.baseUrl}/images/blog-default-social.jpg`, // CHANGED: Use runtimeConfig
-  ogUrl: `${config.public.baseUrl}/blog`, // CHANGED: Use runtimeConfig
+  ogImage: `${config.public.baseUrl}/images/blog-default-social.jpg`,
+  ogUrl: `${config.public.baseUrl}/blog`,
   ogType: 'website',
   twitterCard: 'summary_large_image',
   twitterTitle: 'Blog & Insights - Benchmark Valuers',
   twitterDescription: 'Stay informed with the latest real estate market trends, news and expert insights from Benchmark Valuers Ltd in Kenya.',
-  twitterImage: `${config.public.baseUrl}/images/blog-default-social.jpg`, // CHANGED: Use runtimeConfig
+  twitterImage: `${config.public.baseUrl}/images/blog-default-social.jpg`,
   twitterCreator: '@BenchmarkValuers',
 });
-// --- END ADVANCED SEO TAGS ---
 </script>
 
 <style>

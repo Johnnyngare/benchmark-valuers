@@ -66,6 +66,7 @@ import { useRoute, navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
 
 definePageMeta({
   layout: 'default',
+  ssr: false,
 });
 
 useHead({

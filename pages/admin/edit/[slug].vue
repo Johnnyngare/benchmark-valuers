@@ -94,7 +94,7 @@ import { useRoute, navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
 import { marked } from 'marked';
 // import { useToast } from 'vue-toastification'; // <-- REMOVED this line
 
-definePageMeta({ middleware: 'auth' });
+definePageMeta({ middleware: 'auth', ssr: false });
 const route = useRoute();
 const slug = route.params.slug as string;
 const nuxtApp = useNuxtApp(); // INITIALIZE nuxtApp
