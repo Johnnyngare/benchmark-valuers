@@ -1,5 +1,3 @@
-// pages/signup/%5Btoken%5D.vue
-
 <template>
   <section class="container mx-auto px-4 py-16 md:py-24 bg-gray-50 min-h-screen flex items-center justify-center">
     <div class="max-w-md w-full bg-white rounded-lg shadow-xl p-8">
@@ -63,13 +61,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRoute, navigateTo } from '#imports';
-import { useToast } from 'vue-toastification';
+import { useRoute, navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
+// import { useToast } from 'vue-toastification'; // <-- REMOVED THIS LINE
 
 definePageMeta({
-  layout: 'default', // Or whatever layout you want for this page
-
- 
+  layout: 'default',
 });
 
 useHead({
@@ -77,7 +73,8 @@ useHead({
 });
 
 const route = useRoute();
-const toast = useToast();
+const nuxtApp = useNuxtApp(); // INITIALIZE nuxtApp
+const toast = nuxtApp.$toast; // <--- GET TOAST INSTANCE FROM NUXT APP CONTEXT
 
 const token = ref<string | null>(null);
 const email = ref<string | null>(null);
@@ -87,16 +84,24 @@ const isLoading = ref(false);
 const isValidInvite = ref(false);
 
 onMounted(() => {
-  // --- CRITICAL CHANGE: Read from route.params, not route.query ---
   const routeToken = route.params.token as string;
   const queryEmail = route.query.email as string;
 
-  if (routeToken && queryEmail) {
+  if (routeToken === 'PRERENDER_PLACEHOLDER_TOKEN') { // Handle prerendered page
+    isValidInvite.value = false;
+    // Don't show toast on server, only on client after mount
+    if (!process.server) {
+      toast.error('This is a generic registration page. Please use a valid invite link.');
+    }
+  } else if (routeToken && queryEmail) {
     token.value = routeToken;
     email.value = queryEmail;
     isValidInvite.value = true;
   } else {
-    toast.error('Invalid or incomplete invitation link.');
+    isValidInvite.value = false;
+    if (!process.server) {
+      toast.error('Invalid or incomplete invitation link.');
+    }
   }
 });
 
@@ -105,7 +110,6 @@ async function handleRegister() {
     toast.error('Passwords do not match.');
     return;
   }
-  // Basic password strength check (optional, but good practice)
   if (password.value.length < 8) {
     toast.error('Password must be at least 8 characters long.');
     return;
@@ -132,7 +136,6 @@ async function handleRegister() {
 
   } catch (err: any) {
     console.error('Registration failed:', err);
-    // Use err.data?.message for more specific backend errors
     toast.error(err.data?.message || 'An unknown error occurred during registration. Please try again.');
   } finally {
     isLoading.value = false;

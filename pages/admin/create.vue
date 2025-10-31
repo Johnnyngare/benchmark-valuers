@@ -83,14 +83,15 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { navigateTo } from '#imports';
+import { navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
 import { marked } from 'marked';
-import { useToast } from 'vue-toastification';
+// import { useToast } from 'vue-toastification'; // <-- REMOVED this line
 
 definePageMeta({ middleware: 'auth' });
 useHead({ title: 'Create New Post | Benchmark Valuers' });
 
-const toast = useToast();
+const nuxtApp = useNuxtApp(); // INITIALIZE nuxtApp
+const toast = nuxtApp.$toast; // <--- GET TOAST INSTANCE FROM NUXT APP CONTEXT
 const isLoading = ref(false);
 const selectedFile = ref<File | null>(null);
 
@@ -101,8 +102,8 @@ const post = ref({
   author: 'Admin',
   category: '',
   description: '',
-  content: '# Start writing your post here...\n\nUse **Markdown** to format your text.', // Changed from 'body'
-  imageUrl: '' // Changed from 'image'
+  content: '# Start writing your post here...\n\nUse **Markdown** to format your text.',
+  imageUrl: ''
 });
 
 const markdownPreview = computed(() => {
@@ -126,18 +127,16 @@ const handleFileUpload = (event: Event) => {
 async function createPost() {
   isLoading.value = true;
   try {
-    // First, upload the image if one is selected
     if (selectedFile.value) {
       const formData = new FormData();
-      formData.append('image', selectedFile.value); // API expects 'image' field
+      formData.append('image', selectedFile.value);
       const response = await $fetch<{ url: string }>('/api/admin/upload', {
         method: 'POST',
         body: formData,
       });
-      post.value.imageUrl = response.url; // Update the correct property
+      post.value.imageUrl = response.url;
     }
 
-    // Then, create the post with all the data (including the new imageUrl)
     await $fetch('/api/admin/posts/create', {
       method: 'POST',
       body: post.value

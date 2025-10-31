@@ -1,3 +1,4 @@
+// pages/admin/dashboard.vue
 <template>
   <section
     class="container mx-auto px-4 py-16 md:py-24 bg-gray-50 min-h-screen"
@@ -111,7 +112,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAuth } from '~/composables/useAuth';
-import { useToast } from 'vue-toastification';
+import { useNuxtApp } from '#imports';
 import { useRuntimeConfig } from 'nuxt/app'; // Import useRuntimeConfig
 
 definePageMeta({
@@ -125,8 +126,8 @@ useHead({
 });
 
 const { logout } = useAuth();
-const toast = useToast();
-const config = useRuntimeConfig(); // Initialize runtime config
+const nuxtApp = useNuxtApp();
+const toast = nuxtApp.$toast; // Initialize runtime config
 
 // Interface for blog posts fetched from the API
 interface AdminBlogPost {

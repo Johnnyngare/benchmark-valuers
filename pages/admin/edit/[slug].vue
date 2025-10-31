@@ -90,14 +90,15 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted } from 'vue';
-import { useRoute, navigateTo } from '#imports';
+import { useRoute, navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
 import { marked } from 'marked';
-import { useToast } from 'vue-toastification';
+// import { useToast } from 'vue-toastification'; // <-- REMOVED this line
 
 definePageMeta({ middleware: 'auth' });
 const route = useRoute();
 const slug = route.params.slug as string;
-const toast = useToast();
+const nuxtApp = useNuxtApp(); // INITIALIZE nuxtApp
+const toast = nuxtApp.$toast; // <--- GET TOAST INSTANCE FROM NUXT APP CONTEXT
 
 useHead({ title: `Edit Post: ${slug} | Benchmark Valuers` });
 
