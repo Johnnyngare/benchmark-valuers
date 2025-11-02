@@ -1,5 +1,5 @@
 // server/api/admin/invite.post.ts
-import { defineEventHandler, readBody, createError } from 'h3';
+import { defineEventHandler, readBody, createError, } from 'h3';
 import jsonwebtoken from 'jsonwebtoken';
 import { Resend } from 'resend';
 import { z } from 'zod';
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
   const validation = inviteSchema.safeParse(body);
 
   if (!validation.success) {
-    throw createError({ statusCode: 400, message: validation.error.issues[0].message });
+    throw createError({ statusCode: 400, message: validation.error.issues[0]?.message || 'Invalid email address provided.' });
   }
   const { email } = validation.data;
 
@@ -57,7 +57,7 @@ const registrationUrl = `${BASE_URL}/signup/${inviteToken}?email=${encodeURIComp
 
   try {
     await resend.emails.send({
-      from: 'Benchmark Valuers <onboarding@resend.dev>',
+      from: 'Benchmark Valuers <noreply@benchmarkvaluers.co.ke>',
       to: [email],
       subject: 'You have been invited to join the Benchmark Valuers Admin Portal',
       html: `

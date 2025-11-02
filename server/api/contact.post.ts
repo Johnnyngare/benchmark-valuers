@@ -44,9 +44,9 @@ export default defineEventHandler(async (event) => {
   try {
     // Send the email to your company
     await resend.emails.send({
-      from: 'onboarding@resend.dev', // Must be this domain for dev/unverified domains
+      from: 'Benchmark Valuers <info@benchmarkvaluers.co.ke>', // Must be this domain for dev/unverified domains
       to: 'info@benchmarkvaluers.co.ke', // The company's email address
-      reply_to: email, // Set the user's email as the reply-to address
+      replyTo: email, // Set the user's email as the reply-to address
       subject: `New Contact Form Submission - ${service}`,
       html: `
         <h1>New Website Contact Form Submission</h1>
