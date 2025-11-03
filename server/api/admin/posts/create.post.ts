@@ -11,18 +11,19 @@ const createPostSchema = z.object({
   imageUrl: z.string().url('Invalid image URL').optional().nullable(),
   category: z.string().optional().nullable(),
   author: z.string().optional().nullable(),
+  description: z.string().optional().nullable(), // <--- ADD THIS LINE
 });
 
 export default defineEventHandler(async (event) => {
-  // NOTE: Authentication handled by middleware.
-
   const body = await readBody(event);
   const validation = createPostSchema.safeParse(body);
 
   if (!validation.success) {
+    // Log the exact validation issues for better debugging
+    console.error("Post creation validation failed:", validation.error.issues); 
     throw createError({ statusCode: 400, message: 'Invalid post data.', data: validation.error.issues });
   }
-
+  
   try {
     const [newPost] = await db
       .insert(posts)
