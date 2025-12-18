@@ -12,7 +12,7 @@
         </p>
         <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
           <!-- UPDATED: Request Valuation to Remove Quote -->
-          <BaseButton to="/contact" text="Request Valuation" variant="primary" />
+          <BaseButton to="/contact" text="Request Quotation" variant="primary" />
           <!-- REMOVED: "Our Services" button as requested -->
         </div>
       </div>
