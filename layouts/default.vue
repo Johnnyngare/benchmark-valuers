@@ -8,6 +8,7 @@
     </main>
 
     <AppFooter /> <!-- Our new footer component -->
+    <BackToTop />
   </div>
 </template>
 

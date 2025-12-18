@@ -1,4 +1,3 @@
-<!-- pages/contact.vue -->
 <template>
   <div class="contact-page">
     <!-- Page Hero Section -->
@@ -124,41 +123,75 @@
           <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Get in Touch</h2>
 
           <div class="bg-white p-8 rounded-lg shadow-lg mb-8">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Contact Information</h3>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Our Offices</h3> <!-- UPDATED: Header -->
             <ul class="space-y-4 text-lg text-gray-700">
-              <li class="flex items-center">
-                <i class="fas fa-map-marker-alt text-brand-primary mr-3 text-xl"></i>
+              <li class="flex items-start"> <!-- Use items-start for multi-line address alignment -->
+                <i class="fas fa-map-marker-alt text-brand-primary mr-3 text-xl mt-1"></i> <!-- mt-1 to align icon -->
                 <div>
                   <p class="font-semibold">Head Office</p>
                   <p>Madonna House Annex, Suite A409, 4th Floor,</p>
                   <p>Westlands Road, Westlands, Nairobi, Kenya</p>
-                  <p class="mt-2 font-semibold">Nakuru Office</p>
-                  <p>Trade World Building, 1st Floor,</p>
-                  <p>Kijabe Row Opposite Mache Plaza, Nakuru</p>
-                  <p class="mt-2 font-semibold">P.O Box</p>
-                  <p>P.O Box 66499 – 00800, Westlands</p>
+                  <p>P. O Box 66499 – 00800, Westlands</p> <!-- Added P.O Box -->
                 </div>
               </li>
+              <li class="flex items-start">
+                <i class="fas fa-map-marker-alt text-brand-primary mr-3 text-xl mt-1"></i>
+                <div>
+                  <p class="font-semibold">Nakuru Office</p>
+                  <p>Belpar House, 1st Floor, Room 24,</p>
+                  <p>along Court Road, opposite National Bank of Kenya Ltd.</p>
+                  <p>Nakuru town</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-map-marker-alt text-brand-primary mr-3 text-xl mt-1"></i>
+                <div>
+                  <p class="font-semibold">Embu Office</p>
+                  <p>Eastern Emporium Building, 4th Floor.</p>
+                  <p>Kenyatta Avenue, next to National Bank of Kenya Ltd.</p>
+                  <p>Embu town</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-map-marker-alt text-brand-primary mr-3 text-xl mt-1"></i>
+                <div>
+                  <p class="font-semibold">Nyeri Office</p>
+                  <p>Room 104, 1st floor, NDCU Building</p>
+                  <p>along Gakere Road. Nyeri town</p>
+                </div>
+              </li>
+            </ul>
+
+            <h3 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Company Contacts</h3> <!-- ADDED: New header -->
+            <ul class="space-y-4 text-lg text-gray-700">
               <li class="flex items-center">
                 <i class="fas fa-phone-alt text-brand-primary mr-3 text-xl"></i>
                 <div>
-                  <p class="font-semibold">Phone</p>
+                  <p class="font-semibold">Office Lines</p>
+                  <p>+254 790 894 456</p> <!-- UPDATED: New number -->
                   <p>+254 794 318 971</p>
-                  <p>+254 700 000 000</p>
+                </div>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-globe text-brand-primary mr-3 text-xl"></i> <!-- Changed icon -->
+                <div>
+                  <p class="font-semibold">Website</p>
+                  <p><a href="https://www.benchmarkvaluers.co.ke" target="_blank" rel="noopener" class="text-brand-primary hover:underline">www.benchmarkvaluers.co.ke</a></p> <!-- Added Website -->
                 </div>
               </li>
               <li class="flex items-center">
                 <i class="fas fa-envelope text-brand-primary mr-3 text-xl"></i>
                 <div>
-                  <p class="font-semibold">Email</p>
+                  <p class="font-semibold">Emails</p>
                   <p>info@benchmarkvaluers.co.ke</p>
-                  <p>valuations@benchmarkvaluers.co.ke</p>
+                  <p>valuations@benchmarkvaluers.co.ke</p> <!-- Keep this if still relevant -->
+                  <p>benchmarkvaluerslimited@gmail.com</p> <!-- ADDED: New email -->
                 </div>
               </li>
             </ul>
           </div>
 
-          <div class="bg-white p-8 rounded-lg shadow-lg">
+          <div class="bg-white p-8 rounded-lg shadow-lg mt-8"> <!-- Moved hours here -->
             <h3 class="text-2xl font-semibold text-gray-800 mb-4">Business Hours</h3>
             <ul class="space-y-2 text-lg text-gray-700">
               <li class="flex justify-between"><span>Monday - Friday:</span> <span>8:00 AM - 6:00 PM</span></li>
@@ -168,7 +201,7 @@
             <!-- Google Map Embed Placeholder -->
             <div class="mt-8 bg-gray-200 h-64 rounded-lg flex items-center justify-center text-gray-600 text-sm overflow-hidden">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8105051917757!2d36.78280621475485!3d-1.2882583990666904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10b74108848d%3A0xc32561937f26d36e!2sABC%20Place!5e0!3m2!1sen!2ske!4v1678900000000!5m2!1sen!2ske"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8095116773534!2d36.7845347754972!3d-1.2889249987057032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d659e9c201%3A0xf6f6f6f6f6f6f6f!2sMadonna%20House%20Annex!5e0!3m2!1sen!2ske!4v1702641000000!5m2!1sen!2ske"
                 width="100%"
                 height="100%"
                 style="border:0;"
