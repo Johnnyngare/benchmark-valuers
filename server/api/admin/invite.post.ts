@@ -1,4 +1,3 @@
-// server/api/admin/invite.post.ts
 import { defineEventHandler, readBody, createError, } from 'h3';
 import jsonwebtoken from 'jsonwebtoken';
 import { Resend } from 'resend';
@@ -7,7 +6,6 @@ import { db } from '~/server/db';
 import { users } from '~/server/db/schema';
 import { eq } from 'drizzle-orm';
 
-// Add Zod schema for robust email validation
 const inviteSchema = z.object({
   email: z.string().email('A valid email address is required.'),
 });
@@ -16,12 +14,8 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event);
   const JWT_SECRET = config.jwtSecret;
   const RESEND_API_KEY = config.resendApiKey;
-  const BASE_URL = config.public.baseUrl; // Accessing from public runtime config is safer
+  const BASE_URL = config.public.baseUrl;
 
-  // NOTE: Admin authentication is now handled automatically by server/middleware/adminAuth.ts
-  // The old manual JWT verification block has been removed.
-
-  // 1. Validate the incoming email address
   const body = await readBody(event);
   const validation = inviteSchema.safeParse(body);
 
@@ -30,7 +24,6 @@ export default defineEventHandler(async (event) => {
   }
   const { email } = validation.data;
 
-  // 2. Check if a user with this email already exists in the database
   const existingUser = await db.query.users.findFirst({
     where: eq(users.email, email),
   });
@@ -38,16 +31,13 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 409, message: 'A user with this email already exists.' });
   }
   
-  // 3. Generate the secure invite token
   const inviteToken = jsonwebtoken.sign(
     { email, type: 'invite' },
     JWT_SECRET,
-    { expiresIn: '24h' } // Token is valid for 24 hours
+    { expiresIn: '24h' }
   );
   
-  // Construct the registration URL for the email
 const registrationUrl = `${BASE_URL}/signup/${inviteToken}?email=${encodeURIComponent(email)}`;  
-  // 4. Send the invitation email via Resend
   if (!RESEND_API_KEY) {
     console.error('FATAL: Resend API key is not configured.');
     throw createError({ statusCode: 500, message: 'Email service is not configured.' });

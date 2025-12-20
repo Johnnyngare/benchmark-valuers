@@ -9,10 +9,8 @@
           <i class="fas fa-arrow-left mr-2"></i> Back to Blog
         </NuxtLink>
 
-        <!-- Show a loading message while fetching -->
         <div v-if="pending" class="text-center py-20">Loading post...</div>
         
-        <!-- Show an error message if the fetch fails -->
         <div v-else-if="error || !post" class="text-center text-gray-600 text-xl py-20">
           <p>Blog post not found. It might have been moved or deleted.</p>
           <NuxtLink
@@ -23,7 +21,6 @@
           </NuxtLink>
         </div>
 
-        <!-- Render the article only when the post has been successfully fetched -->
         <article v-else>
           <NuxtImg
             v-if="post.imageUrl"
@@ -42,7 +39,6 @@
                 ><i class="fas fa-calendar-alt mr-2"></i>
                 {{ formattedDate }}</span
               >
-              <!-- --- LIKE BUTTON --- -->
               <button 
                 @click="handleLike" 
                 :disabled="hasLiked || isLoadingLike"
@@ -86,7 +82,6 @@
       </div>
     </section>
 
-    <!-- Final Call to Action Section -->
     <section
       class="bg-brand-secondary-dark text-white py-16 md:py-24 text-center"
     >
@@ -112,25 +107,20 @@ import { useRoute, useAsyncData, useHead, useSeoMeta, useRuntimeConfig } from '#
 import { computed, ref, onMounted } from 'vue';
 import { marked } from 'marked';
 
-// --- ADDED: Disable SSR for this page ---
 definePageMeta({
   ssr: false, 
 });
-// --- END ADDED ---
 
 const route = useRoute();
 const slug = route.params.slug as string; 
 const config = useRuntimeConfig();
 
-// Fetch the single blog post. The backend now returns a 'post' object directly
 const { data: post, pending, error } = await useAsyncData(
   `blog-post-${slug}`,
   () => $fetch(`/api/posts/${slug}`)
 );
 
-// --- LIKE FUNCTIONALITY SCRIPT ---
-// Initialize with likes count from fetched post data
-const likeCount = ref(post.value?.likes?.[0]?.count || 0); // Correctly access nested likes count
+const likeCount = ref(post.value?.likes?.[0]?.count || 0);
 const hasLiked = ref(false);
 const isLoadingLike = ref(false);
 
@@ -155,7 +145,6 @@ async function handleLike() {
     isLoadingLike.value = false;
   }
 }
-// --- END LIKE FUNCTIONALITY SCRIPT ---
 
 const renderedContent = computed(() => {
   if (post.value && post.value.content) {
@@ -173,7 +162,6 @@ const formattedDate = computed(() => {
   });
 });
 
-// --- ADVANCED SEO TAGS ---
 useHead({
   title: computed(() => 
     post.value ? `${post.value.title} | Benchmark Valuers Blog` : 'Blog Post - Benchmark Valuers'
@@ -209,9 +197,7 @@ useSeoMeta({
   twitterImage: computed(() => post.value?.imageUrl ? `${config.public.baseUrl}${post.value.imageUrl}` : `${config.public.baseUrl}/images/default-blog-social.jpg`),
   twitterCreator: '@BenchmarkValuers',
 });
-// --- END ADVANCED SEO TAGS ---
 </script>
 
 <style>
-/* Tailwind Typography (prose) will style the v-html content */
 </style>

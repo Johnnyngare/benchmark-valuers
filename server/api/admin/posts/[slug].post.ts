@@ -1,4 +1,3 @@
-// server/api/admin/posts/[slug].post.ts
 import { defineEventHandler, readBody, createError } from 'h3';
 import { db } from '~/server/db';
 import { posts } from '~/server/db/schema';
@@ -13,11 +12,10 @@ const updatePostSchema = z.object({
   imageUrl: z.string().url().optional().nullable(),
   category: z.string().optional().nullable(),
   author: z.string().optional().nullable(),
-  oldImageUrl: z.string().url().optional().nullable(), // Sent by client to manage blob deletion
+  oldImageUrl: z.string().url().optional().nullable(),
 });
 
 export default defineEventHandler(async (event) => {
-  // NOTE: Authentication handled by middleware
   const slug = getRouterParam(event, 'slug');
   if (!slug) {
     throw createError({ statusCode: 400, message: 'Slug is required in URL.' });
@@ -33,7 +31,6 @@ export default defineEventHandler(async (event) => {
   const { oldImageUrl, ...updateData } = validation.data;
 
   try {
-    // If image has changed, delete the old one from Vercel Blob
     if (oldImageUrl && oldImageUrl !== updateData.imageUrl) {
       try {
         await del(oldImageUrl);

@@ -164,7 +164,7 @@ useSeoMeta({
   ogTitle: 'Who We Are - Benchmark Valuers Ltd | Our Mission, Vision, and Team',
   description: 'Learn more about Benchmark Valuers Ltd, our mission, vision, values, expert team, and professional certifications in real estate valuation and consultancy in Kenya.',
   ogDescription: 'Learn more about Benchmark Valuers Ltd, our mission, vision, values, expert team, and professional certifications in real estate valuation and consultancy in Kenya.',
-  ogImage: `${process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/images/default-about-social.jpg`, // A specific social image for the about page
+  ogImage: `${process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/images/default-about-social.jpg`,
   ogUrl: `${process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/who-we-are`,
   ogType: 'website',
   twitterCard: 'summary_large_image',

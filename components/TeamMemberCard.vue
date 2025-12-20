@@ -1,4 +1,3 @@
-<!-- components/TeamMemberCard.vue -->
 <template>
   <div class="bg-white rounded-lg shadow-md overflow-hidden text-center hover:shadow-lg transition-shadow duration-300">
     <NuxtImg
@@ -29,7 +28,7 @@ const props = defineProps({
   },
   image: {
     type: String,
-    default: '/images/default-team-member.jpg', // Placeholder image
+    default: '/images/default-team-member.jpg', 
   },
 });
 </script>

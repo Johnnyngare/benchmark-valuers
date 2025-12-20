@@ -1,11 +1,9 @@
-// server/api/admin/posts.get.ts
 import { defineEventHandler, createError } from 'h3';
 import { db } from '~/server/db';
 import { posts } from '~/server/db/schema';
 import { desc } from 'drizzle-orm';
 
 export default defineEventHandler(async (event) => {
-  // NOTE: Authentication handled by middleware.
   try {
     const allPosts = await db.query.posts.findMany({
       orderBy: [desc(posts.createdAt)],

@@ -1,4 +1,3 @@
-// server/api/posts.get.ts
 import { defineEventHandler, createError, getQuery } from 'h3';
 import { db } from '~/server/db';
 import { posts } from '~/server/db/schema';
@@ -12,13 +11,10 @@ export default defineEventHandler(async (event) => {
     const categoryQuery = query.category as string;
     const searchQuery = (query.search as string || '').toLowerCase();
 
-    // Base query for fetching posts
     let queryBuilder = db.select().from(posts).orderBy(desc(posts.createdAt));
 
-    // Base query for counting total posts (more efficient)
     let countBuilder = db.select({ value: count() }).from(posts);
 
-    // Apply filters to both queries
     if (categoryQuery && categoryQuery !== 'All Posts') {
       queryBuilder = queryBuilder.where(eq(posts.category, categoryQuery));
       countBuilder = countBuilder.where(eq(posts.category, categoryQuery));
@@ -28,7 +24,6 @@ export default defineEventHandler(async (event) => {
       countBuilder = countBuilder.where(like(posts.title, `%${searchQuery}%`));
     }
 
-    // Execute both queries
     const paginatedPosts = await queryBuilder.limit(limit).offset((page - 1) * limit);
     const totalResult = await countBuilder;
     const totalPosts = totalResult[0].value;

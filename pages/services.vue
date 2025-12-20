@@ -134,8 +134,6 @@
 <script setup lang="ts">
 import { useHead } from 'nuxt/app';
 
-// Page specific meta for SEO
-// useHead is auto-imported by Nuxt; no explicit import required
 useHead({
   title: 'Our Services - Benchmark Valuers',
   meta: [

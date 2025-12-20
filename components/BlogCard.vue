@@ -1,4 +1,3 @@
-<!-- components/BlogCard.vue -->
 <template>
   <NuxtLink
     :to="`/blog/${slug}`"
@@ -34,7 +33,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-// defineProps is a compiler macro and does not need to be imported.
 const props = defineProps({
   title: {
     type: String,
@@ -62,7 +60,6 @@ const props = defineProps({
   },
 });
 
-// Computed property to format the date string for display
 const formattedDate = computed(() => {
   return new Date(props.date).toLocaleDateString("en-US", {
     year: "numeric",

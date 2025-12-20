@@ -1,4 +1,3 @@
-// server/api/posts/[slug].get.ts
 import { defineEventHandler, createError } from 'h3';
 import { db } from '~/server/db';
 import { posts } from '~/server/db/schema';
@@ -19,7 +18,6 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 404, message: 'Post not found.' });
     }
     
-    // The 'content' field from the schema replaces the 'body' from gray-matter
     return post;
 
   } catch (error) {

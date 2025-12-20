@@ -33,8 +33,12 @@
         <NuxtLink to="/contact" class="text-gray-600 hover:text-brand-primary transition-colors duration-200">Contact</NuxtLink>
         
         <!-- UPDATED: Request Valuation to Remove Quote -->
-        <BaseButton to="/contact" text="Request Quotation" variant="primary" />
+        <BaseButton to="/request-for-quote" text="Request Quote" variant="primary" /> <!-- Link to new RFQ page -->
         
+        <!-- --- ADDED: Link to Book a Free Consultation Page (Desktop) --- -->
+        <BaseButton to="/book-consultation" text="Book a Free Consultation" variant="secondary-outline" /> 
+        <!-- --- END ADDED --- -->
+
         <div class="border-l border-gray-300 h-6"></div>
         
         <!-- --- CRITICAL FIX: Staff Login Button to be changed to Sign Out upon sign in --- -->
@@ -58,7 +62,9 @@
 
       <!-- Mobile Menu Toggle & CTA -->
       <div class="md:hidden flex items-center space-x-4">
-        <BaseButton to="/contact" text="Request Valuation" variant="primary-mobile" />
+        <!-- UPDATED: Mobile CTA to "Book a Free Consultation" -->
+        <BaseButton to="/book-consultation" text="Book a Free Consultation" variant="primary-mobile" /> 
+        
         <button @click="toggleMobileMenu" class="text-gray-600 focus:outline-none">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
@@ -71,10 +77,9 @@
         </button>
         <nav class="flex flex-col space-y-6 text-2xl">
           <NuxtLink @click="closeMobileMenu" to="/" class="text-gray-800 hover:text-brand-primary">Home</NuxtLink>
-          <!-- UPDATED: About Us for mobile -->
           <NuxtLink @click="closeMobileMenu" to="/about" class="text-gray-800 hover:text-brand-primary">About Us</NuxtLink>
           
-          <!-- Mobile Dropdown for Practice Areas (simplified for mobile) -->
+          <!-- Mobile Dropdown for Practice Areas -->
           <div class="relative">
             <button @click="toggleMobileDropdown('practiceAreas')" class="text-gray-800 hover:text-brand-primary focus:outline-none flex items-center justify-center w-full">
               Practice Areas <i :class="['fas ml-2 text-xl', mobileDropdowns.practiceAreas ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
@@ -89,9 +94,9 @@
           
           <NuxtLink @click="closeMobileMenu" to="/blog" class="text-gray-800 hover:text-brand-primary">Blog</NuxtLink>
           <NuxtLink @click="closeMobileMenu" to="/contact" class="text-gray-800 hover:text-brand-primary">Contact</NuxtLink>
-          <BaseButton @click="closeMobileMenu" to="/contact" text="Request Valuation" variant="primary" class="mt-4" />
           
-          <!-- Staff Login/Sign Out for mobile -->
+          <BaseButton @click="closeMobileMenu" to="/book-consultation" text="Book a Free Consultation" variant="primary" class="mt-4" /> 
+          
           <NuxtLink
             v-if="!loggedIn"
             @click="closeMobileMenu"
@@ -100,6 +105,13 @@
           >
             Staff Login
           </NuxtLink>
+          <button
+            v-else
+            @click="logoutAndCloseMobileMenu"
+            class="px-4 py-2 rounded-lg border border-transparent text-white bg-red-500 hover:bg-red-600 transition-colors duration-300 text-lg mt-8"
+          >
+            Sign Out
+          </button>
         </nav>
       </div>
     </div>
@@ -107,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'; // Import watch for router change detection
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '~/composables/useAuth';
 
@@ -116,11 +128,10 @@ const mobileDropdowns = ref({
   practiceAreas: false,
 });
 
-const { loggedIn, logout } = useAuth(); // Destructure loggedIn and logout
+const { loggedIn, logout } = useAuth();
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
-  // Close any open dropdowns when main menu toggles
   if (!isMobileMenuOpen.value) {
     mobileDropdowns.value.practiceAreas = false;
   }
@@ -128,7 +139,7 @@ const toggleMobileMenu = () => {
 
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false;
-  mobileDropdowns.value.practiceAreas = false; // Also close dropdowns
+  mobileDropdowns.value.practiceAreas = false;
 };
 
 const toggleMobileDropdown = (dropdownName: 'practiceAreas') => {
@@ -136,13 +147,12 @@ const toggleMobileDropdown = (dropdownName: 'practiceAreas') => {
 };
 
 const logoutAndCloseMobileMenu = () => {
-  logout(); // Perform logout
-  closeMobileMenu(); // Close mobile menu after logout
+  logout();
+  closeMobileMenu();
 };
 
 const router = useRouter();
 
-// Watch for route changes to close the mobile menu automatically
 watch(router.currentRoute, () => {
   closeMobileMenu();
 });

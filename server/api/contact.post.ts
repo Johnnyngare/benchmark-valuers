@@ -1,8 +1,8 @@
 import { defineEventHandler, readBody, createError } from 'h3';
 import { Resend } from 'resend';
 import { z } from 'zod';
+import { useRuntimeConfig } from '#imports';
 
-// Define a schema for strong server-side validation using Zod
 const contactFormSchema = z.object({
   firstName: z.string().trim().min(1, 'First Name is required'),
   lastName: z.string().trim().min(1, 'Last Name is required'),
@@ -27,7 +27,6 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const validation = contactFormSchema.safeParse(body);
 
-  // If validation fails, return a 400 error with details
   if (!validation.success) {
     throw createError({
       statusCode: 400,
@@ -38,15 +37,13 @@ export default defineEventHandler(async (event) => {
 
   const { firstName, lastName, email, phone, service, message } = validation.data;
   
-  // Instantiate the Resend client
   const resend = new Resend(RESEND_API_KEY);
 
   try {
-    // Send the email to your company
     await resend.emails.send({
-      from: 'Benchmark Valuers <info@benchmarkvaluers.co.ke>', // Must be this domain for dev/unverified domains
-      to: 'info@benchmarkvaluers.co.ke', // The company's email address
-      replyTo: email, // Set the user's email as the reply-to address
+      from: 'Benchmark Valuers <info@benchmarkvaluers.co.ke>',
+      to: 'info@benchmarkvaluers.co.ke',
+      replyTo: email,
       subject: `New Contact Form Submission - ${service}`,
       html: `
         <h1>New Website Contact Form Submission</h1>

@@ -1,6 +1,5 @@
 <template>
   <div class="blog-listing-page">
-    <!-- Page Hero Section -->
     <section
       class="bg-brand-secondary-dark text-white py-16 md:py-24 text-center"
     >
@@ -15,13 +14,10 @@
       </div>
     </section>
 
-    <!-- Blog Posts Grid -->
     <section class="py-16 md:py-24 bg-brand-light-bg">
       <div class="container mx-auto px-4">
         <h2 class="sr-only">Latest Articles</h2>
-        <!-- Screen reader only title -->
 
-        <!-- Search and Filter -->
         <div
           class="flex flex-col md:flex-row items-center justify-between mb-12 space-y-4 md:space-y-0"
         >
@@ -89,7 +85,6 @@
           v-if="pending"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          <!-- Placeholder skeletons for loading state -->
           <div v-for="n in postsPerPage" :key="n" class="bg-white rounded-lg shadow-md p-6 animate-pulse">
             <div class="h-48 bg-gray-200 rounded-lg mb-4"></div>
             <div class="h-6 bg-gray-200 rounded mb-2 w-3/4"></div>
@@ -116,7 +111,6 @@
           No blog posts found matching your criteria.
         </div>
 
-        <!-- Pagination Controls -->
         <div v-if="totalPages > 1" class="mt-12 flex justify-center items-center space-x-4">
           <button
             @click="goToPage(currentPage - 1)"
@@ -137,7 +131,6 @@
       </div>
     </section>
 
-    <!-- Final Call to Action Section -->
     <section
       class="bg-brand-secondary-dark text-white py-16 md:py-24 text-center"
     >
@@ -162,11 +155,9 @@
 import { ref, computed, watch } from "vue";
 import { useAsyncData, useHead, useRoute, useRouter, useSeoMeta, useRuntimeConfig } from "nuxt/app";
 
-// --- ADDED: Disable SSR for this page ---
 definePageMeta({
   ssr: false, 
 });
-// --- END ADDED ---
 
 interface BlogPost {
   id: number;
@@ -276,5 +267,4 @@ useSeoMeta({
 </script>
 
 <style>
-/* Your existing styles are fine */
 </style>

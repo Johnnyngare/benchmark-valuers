@@ -1,4 +1,3 @@
-// server/api/posts/[slug]/like.post.ts
 import { defineEventHandler, createError } from 'h3';
 import { db } from '~/server/db';
 import { posts, likes } from '~/server/db/schema';
@@ -11,17 +10,15 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // Find the post by slug to get its ID
     const post = await db.query.posts.findFirst({
       where: eq(posts.slug, slug),
-      columns: { id: true } // Only need the ID
+      columns: { id: true }
     });
 
     if (!post) {
       throw createError({ statusCode: 404, message: 'Cannot like a post that does not exist.' });
     }
 
-    // Upsert logic: Increment if exists, create if not
     const [result] = await db
       .insert(likes)
       .values({ postId: post.id, count: 1 })

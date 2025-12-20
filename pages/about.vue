@@ -1,6 +1,5 @@
 <template>
   <div class="about-us-page">
-    <!-- About Us Hero or Intro Section (Content from your previous 'who-we-are.vue' or similar) -->
     <section class="py-16 md:py-24 bg-brand-light-bg">
       <div class="container mx-auto px-4">
         <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6 text-center">About Us</h1>
@@ -10,9 +9,8 @@
           With years of experience and a team of certified professionals, we deliver accurate,
           reliable, and timely services that meet international standards.
         </p>
-        <!-- Additional 'About Us' content like Mission, Vision, Values can go here -->
+
         <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-16 mb-8 text-center">Our Team</h2>
-        <!-- Example structure for team members, adjust based on your TeamMemberCard component -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
             <TeamMemberCard name="John Smith" title="Managing Director" image="/images/team-john.jpg" />
             <TeamMemberCard name="Sarah Jones" title="Head of Valuations" image="/images/team-sarah.jpg" />
@@ -22,12 +20,10 @@
       </div>
     </section>
 
-    <!-- --- NEW SECTION: Our Valued Partners --- -->
     <section class="py-16 md:py-24 bg-white">
       <div class="container mx-auto px-4">
         <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">Our Valued Partners</h2>
         <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 text-lg text-gray-700">
-          <!-- Partners List - Column 1 -->
           <ul class="list-disc list-inside space-y-2">
             <li>Equity Bank (Kenya) Limited</li>
             <li>Co-operative Bank of Kenya Limited</li>
@@ -42,7 +38,6 @@
             <li>Juhudi Kilimo Company Ltd</li>
             <li>Rafiki Microfinance Bank Limited</li>
           </ul>
-          <!-- Partners List - Column 2 -->
           <ul class="list-disc list-inside space-y-2">
             <li>Pivotal Women’s Sacco</li>
             <li>Muki Sacco Limited</li>
@@ -57,7 +52,6 @@
             <li>United Winners Sacco Society</li>
             <li>PEFA Nairobi Central Sacco</li>
           </ul>
-          <!-- Partners List - Column 3 -->
           <ul class="list-disc list-inside space-y-2">
             <li>Shelloyees Sacco Limited</li>
             <li>Stima Investment Cooperative Society</li>
@@ -76,9 +70,7 @@
         </div>
       </div>
     </section>
-    <!-- --- END NEW SECTION --- -->
 
-    <!-- Optional: Call to Action Section if desired, similar to index page -->
     <section class="bg-brand-secondary-dark text-white py-16 md:py-24 text-center">
       <div class="container mx-auto px-4">
         <h2 class="text-3xl md:text-5xl font-extrabold mb-4">Want to Partner With Us?</h2>
@@ -93,7 +85,7 @@
 
 <script setup lang="ts">
 import { useHead, useSeoMeta, useRuntimeConfig } from '#imports';
-import TeamMemberCard from '~/components/TeamMemberCard.vue'; // Make sure this component exists and is correctly imported
+import TeamMemberCard from '~/components/TeamMemberCard.vue';
 
 const config = useRuntimeConfig();
 
@@ -124,5 +116,4 @@ useSeoMeta({
 </script>
 
 <style>
-/* Any specific styles for about.vue */
 </style>

@@ -1,4 +1,3 @@
-<!-- pages/privacy-policy.vue -->
 <template>
   <section class="container mx-auto px-4 py-16 md:py-24 bg-brand-light-bg min-h-screen">
     <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 text-center">Privacy Policy</h1>
@@ -18,7 +17,7 @@
       <h2>2. How We Use Your Information</h2>
       <p>We use personal information collected via our website for a variety of business purposes described below. We process your personal information for these purposes in reliance on our legitimate business interests, in order to enter into or perform a contract with you, with your consent, and/or for compliance with our legal obligations.</p>
       <ul>
-        <li>To facilitate account creation and logon process.</li>
+        <li>To facilitate account creation and login process.</li>
         <li>To send you marketing and promotional communications.</li>
         <li>To deliver targeted advertising to you.</li>
         <li>To manage your accounts.</li>
@@ -35,7 +34,6 @@
       <p>You have rights regarding your privacy. You may at any time review or change the information in your account or terminate your account.</p>
       <h2>7. Do We Make Updates to This Policy?</h2>
       <p>Yes, we will update this policy as necessary to stay compliant with relevant laws. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
-      <p>Last updated: December 16, {{ new Date().getFullYear() }}</p>
     </div>
   </section>
 </template>

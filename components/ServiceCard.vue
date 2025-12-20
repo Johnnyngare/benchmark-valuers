@@ -1,4 +1,3 @@
-<!-- components/ServiceCard.vue -->
 <template>
   <div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
     <div class="text-brand-primary text-5xl mb-4">
@@ -18,7 +17,7 @@ const props = defineProps({
   icon: {
     type: String,
     required: true,
-    // Example: 'fas fa-building', 'fas fa-chart-line', 'fas fa-briefcase'
+  
   },
   title: {
     type: String,
@@ -30,7 +29,7 @@ const props = defineProps({
   },
   link: {
     type: String,
-    default: '#', // Provide a meaningful default or ensure it's always set
+    default: '#', 
   },
 });
 </script>

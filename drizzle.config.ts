@@ -1,9 +1,6 @@
-// drizzle.config.ts
 import { defineConfig } from 'drizzle-kit';
-import dotenv from 'dotenv'; // Import dotenv
+import dotenv from 'dotenv';
 
-// Load environment variables from .env.development.local
-// Make sure this path is correct relative to your project root
 dotenv.config({ path: '.env.development.local' });
 
 export default defineConfig({
@@ -11,6 +8,6 @@ export default defineConfig({
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL!, // Now DATABASE_URL will be loaded
+    url: process.env.DATABASE_URL!,
   },
 });

@@ -1,4 +1,3 @@
-<!-- components/BaseButton.vue -->
 <template>
   <NuxtLink
     v-if="to"  
@@ -37,16 +36,13 @@
 </template>
 
 <script setup lang="ts">
-// --- CRITICAL: defineProps is a compiler macro, no import needed ---
-// import { defineProps } from 'vue'; // REMOVE THIS LINE
-import type { PropType } from 'vue'; // Keep PropType if you're using it
+import type { PropType } from 'vue'; 
 
 type ButtonVariant = 'primary' | 'primary-mobile' | 'secondary-outline' | 'light';
 
 const props = defineProps({
   to: {
     type: String,
-    // No longer required: true, as not all BaseButtons are NuxtLinks
   },
   text: {
     type: String,
@@ -60,7 +56,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  type: { // Added for native button behavior inside forms
+  type: {
     type: String as PropType<'button' | 'submit' | 'reset'>,
     default: 'button',
   },

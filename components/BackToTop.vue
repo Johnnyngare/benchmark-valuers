@@ -1,4 +1,3 @@
-<!-- components/BackToTop.vue -->
 <template>
   <button
     v-show="showButton"
@@ -16,7 +15,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const showButton = ref(false);
 
 const handleScroll = () => {
-  showButton.value = window.scrollY > 300; // Show button after scrolling 300px
+  showButton.value = window.scrollY > 300; 
 };
 
 const scrollToTop = () => {

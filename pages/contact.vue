@@ -1,6 +1,5 @@
 <template>
   <div class="contact-page">
-    <!-- Page Hero Section -->
     <section class="bg-brand-secondary-dark text-white py-16 md:py-24 text-center">
       <div class="container mx-auto px-4">
         <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Contact Us</h1>
@@ -10,16 +9,13 @@
       </div>
     </section>
 
-    <!-- Main Contact Content Section -->
     <section class="py-16 md:py-24 bg-brand-light-bg">
       <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12">
 
-        <!-- Contact Form Section -->
         <div>
           <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Send Us a Message</h2>
           <form @submit.prevent="submitForm" class="bg-white p-8 rounded-lg shadow-lg">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <!-- First Name -->
               <div>
                 <label for="firstName" class="block text-gray-700 text-sm font-semibold mb-2">First Name *</label>
                 <input
@@ -31,7 +27,6 @@
                   placeholder="John"
                 />
               </div>
-              <!-- Last Name -->
               <div>
                 <label for="lastName" class="block text-gray-700 text-sm font-semibold mb-2">Last Name *</label>
                 <input
@@ -45,7 +40,6 @@
               </div>
             </div>
 
-            <!-- Email Address -->
             <div class="mb-6">
               <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email Address *</label>
               <input
@@ -57,8 +51,6 @@
                 placeholder="john.doe@example.com"
               />
             </div>
-
-            <!-- Phone Number -->
             <div class="mb-6">
               <label for="phone" class="block text-gray-700 text-sm font-semibold mb-2">Phone Number</label>
               <input
@@ -69,8 +61,6 @@
                 placeholder="+254 7XX XXX XXX"
               />
             </div>
-
-            <!-- Service Required (Dropdown) -->
             <div class="mb-6">
               <label for="service" class="block text-gray-700 text-sm font-semibold mb-2">Service Required *</label>
               <select
@@ -88,8 +78,6 @@
                 <option value="other">Other</option>
               </select>
             </div>
-
-            <!-- Message -->
             <div class="mb-8">
               <label for="message" class="block text-gray-700 text-sm font-semibold mb-2">Message *</label>
               <textarea
@@ -112,26 +100,24 @@
               />
             </div>
 
-            <!-- Submission Status Messages -->
             <p v-if="successMessage" class="mt-6 text-green-600 text-center font-medium">{{ successMessage }}</p>
             <p v-if="errorMessage" class="mt-6 text-red-600 text-center font-medium">{{ errorMessage }}</p>
           </form>
         </div>
 
-        <!-- Contact Information & Map/Hours Section -->
         <div>
           <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Get in Touch</h2>
 
           <div class="bg-white p-8 rounded-lg shadow-lg mb-8">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Our Offices</h3> <!-- UPDATED: Header -->
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Our Offices</h3>
             <ul class="space-y-4 text-lg text-gray-700">
-              <li class="flex items-start"> <!-- Use items-start for multi-line address alignment -->
-                <i class="fas fa-map-marker-alt text-brand-primary mr-3 text-xl mt-1"></i> <!-- mt-1 to align icon -->
+              <li class="flex items-start">
+                <i class="fas fa-map-marker-alt text-brand-primary mr-3 text-xl mt-1"></i>
                 <div>
                   <p class="font-semibold">Head Office</p>
                   <p>Madonna House Annex, Suite A409, 4th Floor,</p>
                   <p>Westlands Road, Westlands, Nairobi, Kenya</p>
-                  <p>P. O Box 66499 – 00800, Westlands</p> <!-- Added P.O Box -->
+                  <p>P. O Box 66499 – 00800, Westlands</p>
                 </div>
               </li>
               <li class="flex items-start">
@@ -162,18 +148,18 @@
               </li>
             </ul>
 
-            <h3 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Company Contacts</h3> <!-- ADDED: New header -->
+            <h3 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Company Contacts</h3>
             <ul class="space-y-4 text-lg text-gray-700">
               <li class="flex items-center">
                 <i class="fas fa-phone-alt text-brand-primary mr-3 text-xl"></i>
                 <div>
                   <p class="font-semibold">Office Lines</p>
-                  <p>+254 790 894 456</p> <!-- UPDATED: New number -->
+                  <p>+254 790 894 456</p>
                   <p>+254 794 318 971</p>
                 </div>
               </li>
               <li class="flex items-center">
-                <i class="fas fa-globe text-brand-primary mr-3 text-xl"></i> <!-- Changed icon -->
+                <i class="fas fa-globe text-brand-primary mr-3 text-xl"></i>
                 <div>
                   <p class="font-semibold">Website</p>
                   <p><a href="https://www.benchmarkvaluers.co.ke" target="_blank" rel="noopener" class="text-brand-primary hover:underline">www.benchmarkvaluers.co.ke</a></p> <!-- Added Website -->
@@ -184,21 +170,20 @@
                 <div>
                   <p class="font-semibold">Emails</p>
                   <p>info@benchmarkvaluers.co.ke</p>
-                  <p>valuations@benchmarkvaluers.co.ke</p> <!-- Keep this if still relevant -->
-                  <p>benchmarkvaluerslimited@gmail.com</p> <!-- ADDED: New email -->
+                  <p>valuations@benchmarkvaluers.co.ke</p>
+                  <p>benchmarkvaluerslimited@gmail.com</p>
                 </div>
               </li>
             </ul>
           </div>
 
-          <div class="bg-white p-8 rounded-lg shadow-lg mt-8"> <!-- Moved hours here -->
+          <div class="bg-white p-8 rounded-lg shadow-lg mt-8">
             <h3 class="text-2xl font-semibold text-gray-800 mb-4">Business Hours</h3>
             <ul class="space-y-2 text-lg text-gray-700">
               <li class="flex justify-between"><span>Monday - Friday:</span> <span>8:00 AM - 6:00 PM</span></li>
               <li class="flex justify-between"><span>Saturday:</span> <span>9:00 AM - 1:00 PM</span></li>
               <li class="flex justify-between"><span>Sunday:</span> <span>Closed</span></li>
             </ul>
-            <!-- Google Map Embed Placeholder -->
             <div class="mt-8 bg-gray-200 h-64 rounded-lg flex items-center justify-center text-gray-600 text-sm overflow-hidden">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8095116773534!2d36.7845347754972!3d-1.2889249987057032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d659e9c201%3A0xf6f6f6f6f6f6f6f!2sMadonna%20House%20Annex!5e0!3m2!1sen!2ske!4v1702641000000!5m2!1sen!2ske"
@@ -215,7 +200,6 @@
       </div>
     </section>
 
-    <!-- Final Call to Action Section (reused for consistency) -->
     <section class="bg-brand-secondary-dark text-white py-16 md:py-24 text-center">
       <div class="container mx-auto px-4">
         <h2 class="text-3xl md:text-5xl font-extrabold mb-4">Ready to Discuss Your Needs?</h2>
@@ -232,7 +216,6 @@
 import { useHead } from 'nuxt/app';
 import { ref } from 'vue';
 
-// Page specific meta for SEO
 useHead({
   title: 'Contact Us - Benchmark Valuers',
   meta: [
@@ -240,13 +223,12 @@ useHead({
   ]
 });
 
-// Form data reactive state
 const formData = ref({
   firstName: '',
   lastName: '',
   email: '',
   phone: '',
-  service: '', // From the dropdown
+  service: '',
   message: '',
 });
 
@@ -267,7 +249,6 @@ async function submitForm() {
 
     if (response.status === 'success') {
       successMessage.value = 'Your message has been sent successfully! We will get back to you shortly.';
-      // Clear the form
       formData.value = {
         firstName: '',
         lastName: '',
@@ -290,7 +271,6 @@ async function submitForm() {
 </script>
 
 <style>
-/* Custom style for the select arrow to override default Tailwind appearance */
 .custom-select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
   background-repeat: no-repeat;

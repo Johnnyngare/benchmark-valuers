@@ -1,9 +1,7 @@
-// server/api/admin/upload.post.ts
 import { defineEventHandler, createError } from 'h3';
 import { put } from '@vercel/blob';
 
 export default defineEventHandler(async (event) => {
-  // NOTE: Authentication should be handled by middleware for all admin routes.
 
   const formData = await readMultipartFormData(event);
   const file = formData?.find(f => f.name === 'image');
@@ -19,7 +17,6 @@ export default defineEventHandler(async (event) => {
       contentType: file.type,
     });
 
-    // Return the public URL of the uploaded file
     return { url: blob.url };
 
   } catch (error) {

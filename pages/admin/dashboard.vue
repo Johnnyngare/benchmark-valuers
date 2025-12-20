@@ -1,4 +1,3 @@
-// pages/admin/dashboard.vue
 <template>
   <section
     class="container mx-auto px-4 py-16 md:py-24 bg-gray-50 min-h-screen"
@@ -16,7 +15,6 @@
       </NuxtLink>
     </div>
 
-    <!-- Manage Blog Posts Section -->
     <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8">
       <h2 class="text-2xl font-bold text-gray-800 mb-6">Manage Blog Posts</h2>
 
@@ -41,16 +39,16 @@
             </tr>
           </thead>
           <tbody class="text-gray-700 text-sm">
-            <tr v-for="post in posts" :key="post.slug" class="border-b border-gray-200 hover:bg-gray-50"> <!-- CHANGED: use post.slug as key -->
+            <tr v-for="post in posts" :key="post.slug" class="border-b border-gray-200 hover:bg-gray-50">
               <td class="py-4 px-6 text-left whitespace-nowrap">
-                <NuxtLink :to="`/blog/${post.slug}`" target="_blank" class="font-medium text-brand-primary hover:underline" :title="`View live post: ${post.title}`"> <!-- CHANGED: use post.slug -->
+                <NuxtLink :to="`/blog/${post.slug}`" target="_blank" class="font-medium text-brand-primary hover:underline" :title="`View live post: ${post.title}`">
                   {{ post.title || 'Untitled Post' }}
                 </NuxtLink>
               </td>
               <td class="py-4 px-6 text-left">{{ post.author || 'N/A' }}</td>
-              <td class="py-4 px-6 text-left">{{ new Date(post.createdAt).toLocaleDateString() }}</td> <!-- CHANGED: use post.createdAt and format -->
+              <td class="py-4 px-6 text-left">{{ new Date(post.createdAt).toLocaleDateString() }}</td>
               <td class="py-4 px-6 text-left">
-                <span :class="['px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full', post.isDraft ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800']"> <!-- Assuming 'isDraft' from schema, or adjust if you still use '_draft' -->
+                <span :class="['px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full', post.isDraft ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800']">
                   {{ post.isDraft ? "Draft" : "Published" }}
                 </span>
               </td>
@@ -73,7 +71,6 @@
       </div>
     </div>
 
-    <!-- Admin Invite System Section -->
     <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 mt-12">
       <h2 class="text-2xl font-bold text-gray-800 mb-6">Invite New User</h2>
       <form @submit.prevent="sendInvite" class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
@@ -113,7 +110,7 @@
 import { ref } from 'vue';
 import { useAuth } from '~/composables/useAuth';
 import { useNuxtApp } from '#imports';
-import { useRuntimeConfig } from 'nuxt/app'; // Import useRuntimeConfig
+import { useRuntimeConfig } from 'nuxt/app';
 
 definePageMeta({
   layout: "default",
@@ -128,29 +125,26 @@ useHead({
 
 const { logout } = useAuth();
 const nuxtApp = useNuxtApp();
-const toast = nuxtApp.$toast; // Initialize runtime config
+const toast = nuxtApp.$toast; 
 
-// Interface for blog posts fetched from the API
 interface AdminBlogPost {
   id: number;
   slug: string;
   title: string;
   author: string | null;
-  createdAt: string; // ISO string from database
+  createdAt: string; 
   updatedAt: string;
-  isDraft?: boolean; // If you add a draft status to your schema
-  // imageUrl: string | null; // Other properties you might display
+  isDraft?: boolean;
 }
 
 
-const { data: posts, pending, error, refresh } = await useAsyncData<AdminBlogPost[]>( // Use the new interface
+const { data: posts, pending, error, refresh } = await useAsyncData<AdminBlogPost[]>(
   'admin-posts',
   () => $fetch('/api/admin/posts'),
   { lazy: false }
 );
 
-// --- Post Deletion Logic ---
-function handleDelete(slug: string) { // Changed type to string
+function handleDelete(slug: string) {
   if (!slug) {
     toast.error('Cannot delete post without a slug.');
     return;
@@ -172,7 +166,6 @@ async function confirmDelete(slug: string) {
   }
 }
 
-// --- Admin Invite System Logic ---
 const inviteEmail = ref('');
 const isInviting = ref(false);
 const generatedUrl = ref<string | null>(null);
@@ -183,17 +176,16 @@ async function sendInvite() {
     return;
   }
   isInviting.value = true;
-  generatedUrl.value = null; // Clear previous URL
+  generatedUrl.value = null;
 
   try {
     const response = await $fetch<{ registrationUrl: string }>('/api/admin/invite', {
       method: 'POST',
       body: { email: inviteEmail.value }
     });
-    // The registrationUrl now includes `config.public.baseUrl` from the server
     generatedUrl.value = response.registrationUrl;
     toast.success("Invite link generated successfully! Share it with the user.");
-    inviteEmail.value = ''; // Clear the input field
+    inviteEmail.value = '';
   } catch (e: any) {
     console.error("Error generating invite:", e);
     toast.error(e.data?.message || "Failed to generate invite.");
@@ -202,7 +194,6 @@ async function sendInvite() {
   }
 }
 
-// Function to copy the generated URL to clipboard
 async function copyToClipboard() {
   if (generatedUrl.value) {
     try {

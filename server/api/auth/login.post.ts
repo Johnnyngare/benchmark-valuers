@@ -1,4 +1,3 @@
-// server/api/auth/login.post.ts
 import { defineEventHandler, readBody, setCookie, createError } from 'h3';
 import jsonwebtoken from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -42,15 +41,13 @@ export default defineEventHandler(async (event) => {
 
   const token = jsonwebtoken.sign(payload, JWT_SECRET, { expiresIn: '7d' });
 
-  // Set secure HTTP-only cookie (This is for browser security)
   setCookie(event, 'auth_token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge: 60 * 60 * 24 * 7,
     path: '/',
   });
 
-  // IMPORTANT: Also return the token in the response body for client-side state sync
   return { status: 'success', token, user: { email: user.email, role: user.role } };
 });

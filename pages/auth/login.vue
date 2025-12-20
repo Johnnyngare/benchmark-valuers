@@ -1,4 +1,3 @@
-<!-- pages/auth/login.vue -->
 <template>
   <section class="flex justify-center items-center py-16 md:py-24 bg-gray-100 min-h-[calc(100vh-160px)]">
     <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
@@ -33,10 +32,6 @@
             class="w-full"
             :disabled="loading"
           />
-          <!-- Optionally add a Forgot Password link -->
-          <!-- <NuxtLink to="/auth/forgot-password" class="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800">
-            Forgot Password?
-          </NuxtLink> -->
         </div>
       </form>
     </div>
@@ -46,13 +41,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuth } from '~/composables/useAuth'; // Ensure this path is correct
+import { useAuth } from '~/composables/useAuth';
 
-// Define page meta to disable auth middleware for the login page itself
 declare const definePageMeta: (meta: any) => void;
 definePageMeta({
-  layout: 'default', // Use your default layout
-  auth: false, // Explicitly mark as non-protected for the auth middleware
+  layout: 'default',
+  auth: false,
 });
 
 const credentials = ref({
@@ -60,13 +54,12 @@ const credentials = ref({
   password: '',
 });
 const error = ref<string | null>(null);
-const loading = ref(false); // To prevent multiple submissions
+const loading = ref(false);
 const router = useRouter();
-const { login, loggedIn } = useAuth(); // Import loggedIn to check if user is already logged in
+const { login, loggedIn } = useAuth();
 
-// Redirect if already logged in
 if (process.client && loggedIn.value) {
-  router.push('/admin/dashboard'); // Redirect to dashboard if already authenticated
+  router.push('/admin/dashboard');
 }
 
 async function handleLogin() {
@@ -76,14 +69,14 @@ async function handleLogin() {
   console.log('Attempting login with:', credentials.value.username);
   try {
     await login(credentials.value.username, credentials.value.password);
-    console.log('Login successful!'); // Log 3
-    router.push('/admin/dashboard'); // Redirect to dashboard after successful login
+    console.log('Login successful!');
+    router.push('/admin/dashboard');
   } catch (e: any) {
-    console.error('Login process caught an error:', e); // Log 4
+    console.error('Login process caught an error:', e);
     error.value = e.message || 'Login failed. Please check your credentials.';
   } finally {
     loading.value = false;
-    console.log('Login attempt finished. Loading state:', loading.value); // Log 5
+    console.log('Login attempt finished. Loading state:', loading.value); 
   }
 }
 </script>

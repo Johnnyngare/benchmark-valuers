@@ -1,4 +1,3 @@
-<!-- pages/terms-of-usage.vue -->
 <template>
   <section class="container mx-auto px-4 py-16 md:py-24 bg-brand-light-bg min-h-screen">
     <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 text-center">Terms of Usage</h1>
@@ -22,7 +21,6 @@
       <p>These terms shall be governed by and construed in accordance with the laws of Kenya.</p>
       <h2>7. Changes to Terms</h2>
       <p>We reserve the right to modify these terms at any time. Your continued use of the website after any such changes constitutes your acceptance of the new terms.</p>
-      <p>Last updated: December 16, {{ new Date().getFullYear() }}</p>
     </div>
   </section>
 </template>

@@ -35,7 +35,6 @@
       </div>
     </section>
 
-    <!-- Final Call to Action Section -->
     <section class="bg-brand-secondary-dark text-white py-16 md:py-24 text-center">
       <div class="container mx-auto px-4">
         <h2 class="text-3xl md:text-5xl font-extrabold mb-4">Optimize Your Property Portfolio?</h2>
@@ -51,7 +50,7 @@
 <script setup lang="ts">
 import { useHead, useSeoMeta, useRuntimeConfig } from '#imports';
 const config = useRuntimeConfig();
-definePageMeta({ ssr: false }); // Disable SSR for this dynamic page
+definePageMeta({ ssr: false });
 useHead({ title: 'Asset Management - Benchmark Valuers' });
 useSeoMeta({
   title: 'Asset Management - Benchmark Valuers',

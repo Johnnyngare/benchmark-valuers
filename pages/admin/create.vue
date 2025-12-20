@@ -83,19 +83,17 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
+import { navigateTo, useNuxtApp } from '#imports';
 import { marked } from 'marked';
-// import { useToast } from 'vue-toastification'; // <-- REMOVED this line
 
 definePageMeta({ middleware: 'auth', ssr: false });
 useHead({ title: 'Create New Post | Benchmark Valuers' });
 
-const nuxtApp = useNuxtApp(); // INITIALIZE nuxtApp
-const toast = nuxtApp.$toast; // <--- GET TOAST INSTANCE FROM NUXT APP CONTEXT
+const nuxtApp = useNuxtApp();
+const toast = nuxtApp.$toast;
 const isLoading = ref(false);
 const selectedFile = ref<File | null>(null);
 
-// Data model matches the database schema now
 const post = ref({
   title: '',
   slug: '',

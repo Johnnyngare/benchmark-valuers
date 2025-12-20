@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRoute, navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
+import { useRoute, navigateTo, useNuxtApp } from '#imports';
 
 
 definePageMeta({
@@ -88,9 +88,8 @@ onMounted(() => {
   const routeToken = route.params.token as string;
   const queryEmail = route.query.email as string;
 
-  if (routeToken === 'PRERENDER_PLACEHOLDER_TOKEN') { // Handle prerendered page
+  if (routeToken === 'PRERENDER_PLACEHOLDER_TOKEN') {
     isValidInvite.value = false;
-    // Don't show toast on server, only on client after mount
     if (!process.server) {
       toast.error('This is a generic registration page. Please use a valid invite link.');
     }

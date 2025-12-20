@@ -90,25 +90,22 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted } from 'vue';
-import { useRoute, navigateTo, useNuxtApp } from '#imports'; // ADDED useNuxtApp
+import { useRoute, navigateTo, useNuxtApp } from '#imports';
 import { marked } from 'marked';
-// import { useToast } from 'vue-toastification'; // <-- REMOVED this line
 
 definePageMeta({ middleware: 'auth', ssr: false });
 const route = useRoute();
 const slug = route.params.slug as string;
-const nuxtApp = useNuxtApp(); // INITIALIZE nuxtApp
-const toast = nuxtApp.$toast; // <--- GET TOAST INSTANCE FROM NUXT APP CONTEXT
+const nuxtApp = useNuxtApp();
+const toast = nuxtApp.$toast;
 
 useHead({ title: `Edit Post: ${slug} | Benchmark Valuers` });
 
-// Fetch the existing post data using the new admin endpoint
 const { data: initialPostData, pending, error: fetchError } = await useAsyncData(
   `post-edit-${slug}`,
   () => $fetch(`/api/admin/posts/${slug}`)
 );
 
-// Use reactive for the form data to ensure deep reactivity
 const postData = reactive({
   title: '',
   slug: '',
@@ -119,14 +116,12 @@ const postData = reactive({
   imageUrl: null as string | null,
 });
 
-// To track the original image URL for deletion
 const oldImageUrl = ref<string | null>(null);
 
 onMounted(() => {
   if (initialPostData.value) {
-    // Populate the reactive object with fetched data
     Object.assign(postData, initialPostData.value);
-    oldImageUrl.value = initialPostData.value.imageUrl; // Store the original image URL
+    oldImageUrl.value = initialPostData.value.imageUrl;
   } else if (fetchError.value) {
     toast.error("Could not load post data. Redirecting to dashboard.");
     navigateTo('/admin/dashboard');
@@ -152,7 +147,6 @@ async function updatePost() {
 
   isLoading.value = true;
   try {
-    // If a new file is selected, upload it first
     if (selectedFile.value) {
       const formData = new FormData();
       formData.append('image', selectedFile.value);
@@ -160,18 +154,16 @@ async function updatePost() {
         method: 'POST',
         body: formData,
       });
-      // Update the imageUrl for the current post data
       postData.imageUrl = response.url;
     }
 
-    // Prepare the payload for the update API
     const updatePayload = {
       ...postData,
-      oldImageUrl: oldImageUrl.value, // Send the original image URL
+      oldImageUrl: oldImageUrl.value,
     };
 
-    await $fetch(`/api/admin/posts/${slug}`, { // Use the correct RESTful endpoint
-      method: 'POST', // Or PUT, depending on your preference (POST works fine)
+    await $fetch(`/api/admin/posts/${slug}`, {
+      method: 'POST',
       body: updatePayload
     });
 
